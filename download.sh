@@ -87,6 +87,9 @@ unzip -q "${ARTIFACT_ZIP_NAME}" -d $UNZIP_DIR
 
 cp "./${UNZIP_DIR}/Release/JavaScriptCore.framework/Versions/A/JavaScriptCore" $DIST/bin/jsc
 
+chmod +x $DIST/bin/jsc
+ls -lh $DIST/bin
+
 cd $DIST
 tar -cJf "../jsc-${TARGET}.tar.xz" ./bin/jsc
 
