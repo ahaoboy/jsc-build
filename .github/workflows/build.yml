@@ -3,6 +3,9 @@ name: build
 permissions:
   contents: write
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 on:
   push:
     branches:
@@ -165,10 +168,37 @@ jobs:
           name: jsc-x86_64-pc-windows-msvc
           path: ./WebKit/WebKitBuild/JSCOnly/Release/jsc-x86_64-pc-windows-msvc.tar.xz
 
+
+  download :
+    runs-on: ubuntu-24.04
+    if: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: download
+        run: |
+          bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sonoma-x86_64%20arm64-release" aarch64-apple-darwin
+          bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-ventura-x86_64%20arm64-release" x86_64-apple-darwin
+
+          # bash download.sh "https://s3-us-west-2.amazonaws.com/archives.webkit.org/wincairo-x86_64-release" x86_64-pc-windows-msvc
+
+      - name: Upload jsc-aarch64-apple-darwin
+        uses: actions/upload-artifact@v4
+        with:
+          name: jsc-aarch64-apple-darwin
+          path: jsc-aarch64-apple-darwin.tar.xz
+
+      - name: Upload jsc-x86_64-apple-darwin
+        uses: actions/upload-artifact@v4
+        with:
+          name: jsc-x86_64-apple-darwin
+          path: jsc-x86_64-apple-darwin.tar.xz
+
+
   build:
     needs:
       [
         "build-ubuntu",
+        # "download",
         # "build-windows",
         # "build-macos-x86_64",
         # "build-macos-aarch64",
@@ -187,4 +217,26 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "jsc/*.tar.xz,dist-manifest.json"
+          artifacts: "jsc/*"
+  test-release:
+    needs: ["build"]
+    strategy:
+      matrix:
+        os: [
+          ubuntu-24.04,
+          # macos-14,
+          # macos-13
+        ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: wait
+        run: |
+          sleep 120
+      - uses: easy-install/easy-setup@v1
+        with:
+          url: https://github.com/ahaoboy/jsc-build
+      - name: test
+        run: |
+          which jsc
+          jsc ./test.js
