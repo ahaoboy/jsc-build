@@ -100,6 +100,7 @@ jobs:
           path: ./WebKit/WebKitBuild/JSCOnly/Release/jsc-x86_64-apple-darwin.tar.xz
 
   build-ubuntu:
+    if: false
     # runs-on: ubuntu-latest
     runs-on: ubuntu-24.04
     steps:
@@ -197,8 +198,8 @@ jobs:
   build:
     needs:
       [
-        "build-ubuntu",
-        # "download",
+        # "build-ubuntu",
+        "download",
         # "build-windows",
         # "build-macos-x86_64",
         # "build-macos-aarch64",
@@ -223,9 +224,9 @@ jobs:
     strategy:
       matrix:
         os: [
-          ubuntu-24.04,
-          # macos-14,
-          # macos-13
+          # ubuntu-24.04,
+          macos-14,
+          macos-13
         ]
     runs-on: ${{ matrix.os }}
     steps:

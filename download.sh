@@ -85,12 +85,18 @@ mkdir -p $DIST/bin
 
 unzip -q "${ARTIFACT_ZIP_NAME}" -d $UNZIP_DIR
 
-cp "./${UNZIP_DIR}/Release/JavaScriptCore.framework/Versions/A/JavaScriptCore" $DIST/bin/jsc
+cp "./${UNZIP_DIR}/Release/jsc" $DIST/bin/jsc
+cp -r "./${UNZIP_DIR}/Release/JavaScriptCore.framework" $DIST/bin/JavaScriptCore.framework
 
 chmod +x $DIST/bin/jsc
+
+cp ./jsc $DIST/jsc
+chmod +x $DIST/jsc
+
 ls -lh $DIST/bin
 
 cd $DIST
-tar -cJf "../jsc-${TARGET}.tar.xz" ./bin/jsc
+
+tar -cJf "../jsc-${TARGET}.tar.xz" .
 
 cd ..
