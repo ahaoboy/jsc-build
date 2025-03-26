@@ -172,7 +172,7 @@ jobs:
 
   download :
     runs-on: ubuntu-24.04
-    if: false
+    # if: false
     steps:
       - uses: actions/checkout@v4
       - name: download
@@ -220,7 +220,7 @@ jobs:
         with:
           artifacts: "jsc/*"
   test-release:
-    needs: ["build"]
+    # needs: ["build"]
     strategy:
       matrix:
         os: [
