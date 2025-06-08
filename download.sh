@@ -85,7 +85,14 @@ mkdir $UNZIP_DIR
 unzip -q "${ARTIFACT_ZIP_NAME}" -d $UNZIP_DIR
 if [[ "$TARGET" == "x86_64-pc-windows-msvc" ]]; then
 
+  rm -rf $UNZIP_DIR/bin/*test*
+  rm -rf $UNZIP_DIR/bin/*Test*
+  rm -rf $UNZIP_DIR/bin/*.pdb
+  rm -rf $UNZIP_DIR/WebKit.resources
+  rm -rf $UNZIP_DIR/testapiScripts
+
   ls -lh $UNZIP_DIR/bin
+
   cd $UNZIP_DIR
   tar -cJf "../jsc-${TARGET}.tar.xz" .
   cd ..
