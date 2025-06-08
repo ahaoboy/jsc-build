@@ -31,14 +31,12 @@ getLatestVersion() {
         "x86_64-apple-darwin")
           getLatestRevisionFromBuilder 706
           ;;
-        # "linux64")
-        #     curl -s "https://webkitgtk.org/jsc-built-products/x86_64/release/LAST-IS" |
-        #         grep -oP '(\d+)@main\.zip' |
-        #         sed 's/@main\.zip//'
-        #     ;;
-        # "win64")
-        #     getLatestRevisionFromBuilder 27
-        #     ;;
+        "linux64")
+          getLatestRevisionFromBuilder 1059
+          ;;
+        "x86_64-pc-windows-msvc")
+          getLatestRevisionFromBuilder 1192
+          ;;
         # "mac64"|"mac64arm")
         #     name=$2
         #     case "$name" in
@@ -78,25 +76,35 @@ DIST="jsc-${TARGET}"
 ARTIFACT_ZIP_NAME="jsc-${TARGET}.zip"
 UNZIP_DIR="jsc-unzip-${TARGET}"
 
+echo $DOWNLOAD_URL
+
 curl -L -o "${ARTIFACT_ZIP_NAME}" "$DOWNLOAD_URL"
 
+
 mkdir $UNZIP_DIR
-mkdir -p $DIST/bin
-
 unzip -q "${ARTIFACT_ZIP_NAME}" -d $UNZIP_DIR
+if [[ "$TARGET" == "x86_64-pc-windows-msvc" ]]; then
 
-cp "./${UNZIP_DIR}/Release/jsc" $DIST/bin/jsc
-cp -r "./${UNZIP_DIR}/Release/JavaScriptCore.framework" $DIST/bin/JavaScriptCore.framework
+  ls -lh $UNZIP_DIR/bin
+  cd $UNZIP_DIR
+  tar -cJf "../jsc-${TARGET}.tar.xz" .
+  cd ..
+else
+  mkdir -p $DIST/bin
 
-chmod +x $DIST/bin/jsc
+  cp "./${UNZIP_DIR}/Release/jsc" $DIST/bin/jsc
+  cp -r "./${UNZIP_DIR}/Release/JavaScriptCore.framework" $DIST/bin/JavaScriptCore.framework
 
-cp ./jsc $DIST/jsc
-chmod +x $DIST/jsc
+  chmod +x $DIST/bin/jsc
 
-ls -lh $DIST/bin
+  cp ./jsc $DIST/jsc
+  chmod +x $DIST/jsc
 
-cd $DIST
+  ls -lh $DIST/bin
 
-tar -cJf "../jsc-${TARGET}.tar.xz" .
+  cd $DIST
 
-cd ..
+  tar -cJf "../jsc-${TARGET}.tar.xz" .
+
+  cd ..
+fi
