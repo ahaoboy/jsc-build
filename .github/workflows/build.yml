@@ -198,6 +198,11 @@ jobs:
         with:
           name: jsc-x86_64-apple-darwin
           path: jsc-x86_64-apple-darwin.tar.xz
+      - name: Upload x86_64-pc-windows-msvc
+        uses: actions/upload-artifact@v4
+        with:
+          name: x86_64-pc-windows-msvc
+          path: x86_64-pc-windows-msvc.tar.xz
 
       - name: release
         uses: ncipollo/release-action@v1
