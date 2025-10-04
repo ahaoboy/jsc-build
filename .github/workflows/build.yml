@@ -188,17 +188,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: download
         run: |
-          bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sequoia-x86_64%20arm64-release" aarch64-apple-darwin
+          # bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sequoia-x86_64%20arm64-release" aarch64-apple-darwin
           # bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-ventura-x86_64%20arm64-release" x86_64-apple-darwin
           bash download.sh "https://s3-us-west-2.amazonaws.com/archives.webkit.org/win-x86_64-release" x86_64-pc-windows-msvc
 
           # bash download.sh "https://s3-us-west-2.amazonaws.com/archives.webkit.org/wincairo-x86_64-release" x86_64-pc-windows-msvc
 
-      - name: Upload jsc-aarch64-apple-darwin
-        uses: actions/upload-artifact@v4
-        with:
-          name: jsc-aarch64-apple-darwin
-          path: jsc-aarch64-apple-darwin.tar.xz
+      # - name: Upload jsc-aarch64-apple-darwin
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: jsc-aarch64-apple-darwin
+      #     path: jsc-aarch64-apple-darwin.tar.xz
 
       # - name: Upload jsc-x86_64-apple-darwin
       #   uses: actions/upload-artifact@v4
