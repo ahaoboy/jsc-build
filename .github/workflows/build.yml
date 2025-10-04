@@ -57,6 +57,17 @@ jobs:
         with:
           name: jsc-aarch64-apple-darwin
           path: ./WebKit/WebKitBuild/JSCOnly/Release/jsc-aarch64-apple-darwin.tar.xz
+
+      - name: release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./WebKit/WebKitBuild/JSCOnly/Release/jsc-aarch64-apple-darwin-gnu.tar.xz"
+          allowUpdates: true
+          tag: "nightly"
+          name: "nightly"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: main
+          replacesArtifacts: true
   build-macos-x86_64:
     if: false
     runs-on: macos-13
@@ -135,9 +146,7 @@ jobs:
 
       - name: release
         uses: ncipollo/release-action@v1
-        # if: startsWith(github.ref, 'refs/tags/')
         with:
-          # tag: ${{ steps.build.outputs.tag }}
           artifacts: "./WebKit/WebKitBuild/JSCOnly/Release/jsc-x86_64-unknown-linux-gnu.tar.xz"
           allowUpdates: true
           tag: "nightly"
