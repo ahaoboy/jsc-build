@@ -104,8 +104,8 @@ else
 
   chmod +x $DIST/bin/jsc
 
-  cp ./jsc $DIST/jsc
-  chmod +x $DIST/jsc
+  # cp ./jsc $DIST/jsc
+  # chmod +x $DIST/jsc
 
   ls -lh $DIST/bin
 
