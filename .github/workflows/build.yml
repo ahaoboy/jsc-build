@@ -197,8 +197,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: download
         run: |
-          # bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sequoia-x86_64%20arm64-release" aarch64-apple-darwin
-          bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sonoma-x86_64%20arm64-release" aarch64-apple-darwin
+          # mac15
+          bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sequoia-x86_64%20arm64-release" aarch64-apple-darwin
+
+          # mac14
+          # bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-sonoma-x86_64%20arm64-release" aarch64-apple-darwin
+
           # bash download.sh "https://s3-us-west-2.amazonaws.com/minified-archives.webkit.org/mac-ventura-x86_64%20arm64-release" x86_64-apple-darwin
           bash download.sh "https://s3-us-west-2.amazonaws.com/archives.webkit.org/win-x86_64-release" x86_64-pc-windows-msvc
 
