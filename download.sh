@@ -115,3 +115,15 @@ else
 
   cd ..
 fi
+
+file="jsc-${TARGET}.tar.xz"
+
+if [ "$(uname)" = "Darwin" ]; then
+  size=$(stat -f%z "$file")
+else
+  size=$(stat -c%s "$file")
+fi
+
+if [ "$size" -lt 1048576 ]; then
+  rm "$file"
+fi
