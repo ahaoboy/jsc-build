@@ -153,7 +153,7 @@ jobs:
           # sed -i 's/template<typename Functor, typename Signature> concept Invocable = requires(std::decay_t<Functor>&& f, std::function<Signature> expected) { { expected = std::move(f) }; };/template<typename Functor, typename Signature> concept Invocable = std::is_invocable_v<Functor>;/g' Source/WTF/wtf/StdLibExtras.h
 
           # ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON"
-          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON -DENABLE_PRECOMPILED_HEADERS=OFF -DENABLE_TEST_SUPPORT=OFF -DENABLE_API_TESTS=OFF -DDEVELOPER_MODE=OFF -DENABLE_TOOLS=OFF"
+          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON -DENABLE_PRECOMPILED_HEADERS=OFF -DENABLE_TEST_SUPPORT=OFF -DENABLE_API_TESTS=OFF -DENABLE_LAYOUT_TESTS=OFF -DDEVELOPER_MODE=OFF -DENABLE_TOOLS=OFF"
 
           cd ./WebKitBuild/JSCOnly/Release
           tar -cJf jsc-x86_64-unknown-linux-gnu.tar.xz ./bin/jsc ./lib
