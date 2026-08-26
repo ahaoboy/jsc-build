@@ -43,7 +43,7 @@ jobs:
         run: |
           cd WebKit
           # ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON"
-          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON -DSHOW_BINDINGS_GENERATION_PROGRESS=0 -DDEVELOPER_MODE=OFF -DENABLE_EXPERIMENTAL_FEATURES=OFF"
+          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DCMAKE_CXX_FLAGS=-Wno-unused-const-variable -DENABLE_STATIC_JSC=ON -DSHOW_BINDINGS_GENERATION_PROGRESS=0 -DDEVELOPER_MODE=OFF -DENABLE_EXPERIMENTAL_FEATURES=OFF"
 
           cd ./WebKitBuild/JSCOnly/Release
           tar -cJf jsc-aarch64-apple-darwin.tar.xz ./bin/jsc ./lib
