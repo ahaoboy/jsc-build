@@ -129,20 +129,20 @@ jobs:
       - name: Install and Set GCC 12
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-12 g++-12 libstdc++-12-dev
+          sudo apt-get install -y gcc-13 g++-13 libstdc++-13-dev
 
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-          sudo update-alternatives --set gcc /usr/bin/gcc-12
-          sudo update-alternatives --set g++ /usr/bin/g++-12
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+          sudo update-alternatives --set gcc /usr/bin/gcc-13
+          sudo update-alternatives --set g++ /usr/bin/g++-13
 
       - name: build
         env:
           # https://github.com/ahaoboy/jsc-build/actions/runs/32917429137/job/98023964123  /home/runner/work/jsc-build/jsc-build/WebKit/Source/WTF/wtf/linux/HighPriorityThreads.cpp:45:22: error: unused variable 's_highPriorityNiceLevel' [-Werror,-Wunused-const-variable]
           # https://github.com/WebKit/WebKit/commit/44bab332e0f195ddbce08360d52ad0d25540bb2f
           CXXFLAGS: "-Wno-error=unused-const-variable -Wno-unused-const-variable"
-          CC: gcc-12
-          CXX: g++-12
+          CC: gcc-13
+          CXX: g++-13
         run: |
           cd WebKit
 
