@@ -40,6 +40,10 @@ jobs:
           git clone https://github.com/WebKit/WebKit.git WebKit --depth=1
 
       - name: build
+        env:
+          # https://github.com/ahaoboy/jsc-build/actions/runs/32917429137/job/98023964123  /home/runner/work/jsc-build/jsc-build/WebKit/Source/WTF/wtf/linux/HighPriorityThreads.cpp:45:22: error: unused variable 's_highPriorityNiceLevel' [-Werror,-Wunused-const-variable]
+          # https://github.com/WebKit/WebKit/commit/44bab332e0f195ddbce08360d52ad0d25540bb2f
+          CXXFLAGS: "-Wno-error=unused-const-variable -Wno-unused-const-variable"
         run: |
           cd WebKit
           # ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON"
