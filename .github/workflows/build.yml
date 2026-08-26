@@ -40,14 +40,15 @@ jobs:
           git clone https://github.com/WebKit/WebKit.git WebKit --depth=1
 
       - name: build
-        env:
-          # https://github.com/ahaoboy/jsc-build/actions/runs/32917429137/job/98023964123  /home/runner/work/jsc-build/jsc-build/WebKit/Source/WTF/wtf/linux/HighPriorityThreads.cpp:45:22: error: unused variable 's_highPriorityNiceLevel' [-Werror,-Wunused-const-variable]
-          # https://github.com/WebKit/WebKit/commit/44bab332e0f195ddbce08360d52ad0d25540bb2f
-          CXXFLAGS: "-Wno-error=unused-const-variable -Wno-unused-const-variable"
         run: |
           cd WebKit
+
+          # https://github.com/ahaoboy/jsc-build/actions/runs/32917429137/job/98023964123  /home/runner/work/jsc-build/jsc-build/WebKit/Source/WTF/wtf/linux/HighPriorityThreads.cpp:45:22: error: unused variable 's_highPriorityNiceLevel' [-Werror,-Wunused-const-variable]
+          # https://github.com/WebKit/WebKit/commit/44bab332e0f195ddbce08360d52ad0d25540bb2f
+          sed -i 's/static constexpr int s_highPriorityNiceLevel = -20;/[[maybe_unused]] static constexpr int s_highPriorityNiceLevel = -20;/' Source/WTF/wtf/linux/HighPriorityThreads.cpp
+
           # ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON"
-          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DCMAKE_CXX_FLAGS=-Wno-unused-const-variable -DENABLE_STATIC_JSC=ON -DSHOW_BINDINGS_GENERATION_PROGRESS=0 -DDEVELOPER_MODE=OFF -DENABLE_EXPERIMENTAL_FEATURES=OFF"
+          ./Tools/Scripts/build-webkit --release --jsc-only --cmakeargs="-DENABLE_STATIC_JSC=ON -DSHOW_BINDINGS_GENERATION_PROGRESS=0 -DDEVELOPER_MODE=OFF -DENABLE_EXPERIMENTAL_FEATURES=OFF"
 
           cd ./WebKitBuild/JSCOnly/Release
           tar -cJf jsc-aarch64-apple-darwin.tar.xz ./bin/jsc ./lib
