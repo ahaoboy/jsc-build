@@ -119,7 +119,7 @@ jobs:
         run: |
           sudo apt update
 
-          sudo apt install wget unzip python3 ruby-full tree icu-devtools libicu74 libicu-dev -y
+          sudo apt install wget unzip python3 ruby-full tree icu-devtools libicu-dev -y
 
           # https://help.ubuntu.com/community/WebKit
           sudo apt-get install subversion autoconf automake libtool gperf bison flex autotools-dev -y
